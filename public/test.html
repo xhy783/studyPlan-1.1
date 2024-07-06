@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <style>
+        /* 样式化文件输入 */
+        #fileInput {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            border: none;
+            margin: 10px 0;
+        }
+
+        /* 样式化按钮 */
+        button {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #005f75;
+        }
+
+        /* 文件管理窗口样式 */
+        #fileList {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #fileList li {
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #fileList li span {
+            flex-grow: 1;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Manager</h1>
+    <label for="fileInput" class="custom-file-upload">Add File</label>
+    <input type="file" id="fileInput" multiple>
+    <ul id="fileList"></ul>
+    <div id="status"></div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const statusDiv = document.getElementById('status');
+
+        fileInput.addEventListener('change', (event) => {
+            const files = Array.from(event.target.files);
+            if (files.length > 0) {
+                uploadFiles(files);
+            }
+        });
+
+        function fetchFiles() {
+            fetch('/files')
+                .then(response => response.json())
+                .then(data => {
+                    renderFileList(data);
+                });
+        }
+
+        function renderFileList(files) {
+            fileList.innerHTML = '';
+            files.forEach((file, index) => {
+                const li = document.createElement('li');
+                const span = document.createElement('span');
+                span.textContent = decodeURIComponent(file); // 解码文件名以正确显示
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = () => {
+                    deleteFile(file);
+                };
+                li.appendChild(span);
+                li.appendChild(removeButton);
+                fileList.appendChild(li);
+            });
+        }
+
+        function uploadFiles(files) {
+            const formData = new FormData();
+            files.forEach(file => {
+                formData.append('files', file);
+            });
+
+            fetch('/source-upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                statusDiv.innerText = result;
+                fetchFiles();
+            })
+            .catch(error => {
+                statusDiv.innerText = 'File upload failed!';
+                console.error('Error:', error);
+            });
+        }
+
+        function deleteFile(fileName) {
+            fetch('/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fileName: fileName })
+            })
+            .then(response => response.text())
+            .then(result => {
+                statusDiv.innerText = result;
+                fetchFiles();
+            })
+            .catch(error => {
+                statusDiv.innerText = 'File delete failed!';
+                console.error('Error:', error);
+            });
+        }
+
+        fetchFiles();
+    </script>
+</body>
+</html>
