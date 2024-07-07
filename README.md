@@ -29,8 +29,8 @@ This project is a web-based file management system designed for our teachers to 
     Open Command Prompt and run:
 
     ```sh
-    git clone https://github.com/yourusername/file-management-system.git
-    cd file-management-system
+    git clone https://github.com/xhy783/studyPlan-1.1.git
+    cd studyPlan-1.1
     ```
 
 3. **Install dependencies**:
@@ -54,8 +54,8 @@ This project is a web-based file management system designed for our teachers to 
     Open Terminal and run:
 
     ```sh
-    git clone https://github.com/yourusername/file-management-system.git
-    cd file-management-system
+    git clone https://github.com/xhy783/studyPlan-1.1.git
+    cd studyPlan-1.1
     ```
 
 3. **Install dependencies**:
@@ -86,8 +86,8 @@ This project is a web-based file management system designed for our teachers to 
     Open Terminal and run:
 
     ```sh
-    git clone https://github.com/yourusername/file-management-system.git
-    cd file-management-system
+    git clone https://github.com/xhy783/studyPlan-1.1.git
+    cd studyPlan-1.1
     ```
 
 3. **Install dependencies**:
