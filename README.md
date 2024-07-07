@@ -2,14 +2,14 @@
 
 ## Overview
 
-This project is a web-based file management system designed for teachers to upload user information via CSV files. The system generates study plans for each parent based on the uploaded data. Additionally, it includes a file management system allowing administrators to update source files, such as student templates for grades 1-6 (with levels from 111 to 333).
+This project is a web-based file management system designed for our teachers to upload user information via CSV files. The system generates study plans for each parent based on the uploaded data. Additionally, it includes a file management system allowing administrators to update source files, which let teachers change templates.
 
 ## Features
 
 - **Upload CSV Files**: Teachers can upload CSV files containing user information.
 - **Generate Study Plans**: The system processes the CSV file and generates personalized study plans for each parent.
 - **File Management**: Administrators can upload, view, and delete template files in the source directory.
-- **Multi-level Handling**: Handles different student performance levels (e.g., 111, 222, 333).
+- **Multi-level Handling**: Handles different student performance levels (e.g., 111, 222, 333)(no need suring Summery Vacation).
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ This project is a web-based file management system designed for teachers to uplo
 
 1. **Install Node.js**:
 
-    You can use Homebrew to install Node.js. If you don't have Homebrew installed, you can install it from [brew.sh](https://brew.sh/).
+    You can use Homebrew(recommamded) to install Node.js. If you don't have Homebrew installed, you can install it from [brew.sh](https://brew.sh/).
 
     ```sh
     brew install node
@@ -113,7 +113,7 @@ Open your web browser and navigate to `http://localhost:3000/model.html`.
 ## Project Structure
 
 ```plaintext
-file-management-system/
+studyPlan-1.1/
 │
 ├── public/
 │   ├── css/
@@ -128,7 +128,11 @@ file-management-system/
 │   └── (uploaded files)
 │
 ├── source/
-│   └── (source files for templates)
+│   ├── 中班暑期学习计划.xlsx
+│   ├── 初一暑期学习计划.xlsx
+│   ├── 1年级暑期学习计划done.xlsx
+│   ├── 高一暑期学习计划done.xlsx
+│   └── ...         
 │
 ├── processed/
 │   └── (processed files for download)
@@ -143,9 +147,11 @@ file-management-system/
 ### Updating Templates
 
 To update the templates, replace the existing files in the `source` directory with the new templates. The templates should follow the naming convention required by the specific logic in the `server.js` file.
+Or you can just easily go to the model.html and delete old templates and upload new templates(See Uploading New Templates).
 
 ### Code Changes
 
+If we don't change the logic of Summer vacation plans like all plans of the same grade posess the same content we don't need to change codes
 If the template filenames or logic for selecting templates change, you need to update the `processFile` function in `server.js`.
 
 #### Example: Grade 1-6 with Levels 111-333
@@ -286,7 +292,7 @@ const processFile = (filePath, processedFolder, callback) => {
 
 1. **Navigate to the File Management Page**:
 
-    Open your web browser and go to `http://localhost:3000/model.html`.
+    Open your web browser and go to `http://localhost(or IP of aliyun server, depends on where you want to deploy this system):3000/model.html`.
 
 2. **Upload New Templates**:
 
@@ -303,20 +309,9 @@ const processFile = (filePath, processedFolder, callback) => {
     ```sh
     node server.js
     ```
+    (on aliyun's server I use pm2 to manage processes so I can do pm2 restart xes-plan)
 
-## Contributing
+## More information
 
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/my-new-feature`).
-3. Commit your changes (`git commit -am 'Add some feature'`).
-4. Push to the branch (`git push origin feature/my-new-feature`).
-5. Create a new Pull Request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-- Icons by [Material Symbols](https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200).
-- Normalize.css by [necolas](https://necolas.github.io/normalize.css/).
+Should you have any questions or need more information,
+Please contact xhy783@outlook.fr
