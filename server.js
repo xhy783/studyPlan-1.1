@@ -47,7 +47,7 @@ app.post('/upload', upload.single('fileToUpload'), (req, res) => {
                     }
 
                     const sourcePath = path.join(__dirname, 'source', sourceFile);
-                    const targetFile = `${grade}学习计划-${wechatId}.xlsx`;
+                    const targetFile = `${grade}暑期学习计划-${wechatId}.xlsx`;
                     const targetPath = path.join(processedFolder, targetFile);
 
                     try {
