@@ -1,4 +1,4 @@
-# Study Plan Management System
+# Study Plan Management System (For summer vacation)
 
 ## Overview
 
