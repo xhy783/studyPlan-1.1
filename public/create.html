@@ -14,7 +14,7 @@
     <div class="header">
         <div class="header-container">
                 <div class="logo">
-                    <!-- <img src="assets/img/logo.png" alt="logo" width="150" height="30"> -->
+                    <img src="assets/img/暑假系统500x200.png" alt="logo" width="150" height="60">
 
                     <!-- <svg class="pl" width="100" height="100" viewBox="0 0 400 400">
                         <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
@@ -22,7 +22,7 @@
                         <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
                         <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
                     </svg> -->
-                    <p>暑期计划制作</p>
+                    <!-- <p>暑期计划制作</p> -->
                  </div>            
             <div class="menu">
                 <ul>
@@ -78,8 +78,6 @@
                                </div>
                             </label>
                             <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv">
-                        <!-- <label for="fileToUpload" class="custom-file-upload">Choose File</label> -->
-                        <!-- <button type="button" class="btn" onclick="uploadFile()">Upload File</button> -->
                         <button type="button" class="btn" onclick="uploadFile()">
                             <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" class="sparkle">
                                 <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>
@@ -104,18 +102,11 @@
         
                     
     </div>
-<script>    document.addEventListener('DOMContentLoaded', function() {
-    var saveButton = document.getElementById('Trip');
-
-    saveButton.addEventListener('click', function() {
-        window.location.href = 'package.html';
-    });
-});
-</script>
-<script>
+<!-- <script>    
     function uploadFile() {
         var fileInput = document.getElementById('fileToUpload');
-        var file = fileInput.files[0];
+        var file = fileInput.files[0]; 
+
         var formData = new FormData();
         formData.append('fileToUpload', file);
 
@@ -130,17 +121,63 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                document.getElementById('status').innerText = 'File uploaded and processed successfully!';
+                document.getElementById('status').innerText = 'File generated successfully!';
             } else {
-                document.getElementById('status').innerText = 'File upload failed!';
+                document.getElementById('status').innerText = 'File generate failed!';
             }
         };
 
         xhr.responseType = 'blob';
         xhr.send(formData);
     }
-</script>
+</script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fileInput = document.getElementById('fileToUpload');
+        var statusElement = document.getElementById('status');
+        var downloadLink = null;
 
+        // 当用户选择文件时，显示提示信息
+        fileInput.addEventListener('change', function() {
+            var file = fileInput.files[0];
+            if (file) {
+                statusElement.innerText = 'File uploaded successfully!';
+            }
+        });
+
+        // 上传文件并处理
+        window.uploadFile = function() {
+            var file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('fileToUpload', file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'upload', true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    downloadLink = document.createElement('a');
+                    downloadLink.href = window.URL.createObjectURL(new Blob([xhr.response], {type: 'application/zip'}));
+                    downloadLink.download = 'processed_files.zip';
+                    statusElement.innerText = 'File generated successfully!';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                } else {
+                    statusElement.innerText = 'File upload or processing failed!';
+                }
+            };
+
+            xhr.responseType = 'blob';
+            xhr.send(formData);
+        }
+    });
+</script>
 
 
 </body>
