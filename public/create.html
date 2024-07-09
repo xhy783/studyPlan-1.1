@@ -137,7 +137,6 @@
         var statusElement = document.getElementById('status');
         var downloadLink = null;
 
-        // 当用户选择文件时，显示提示信息
         fileInput.addEventListener('change', function() {
             var file = fileInput.files[0];
             if (file) {
@@ -145,7 +144,6 @@
             }
         });
 
-        // 上传文件并处理
         window.uploadFile = function() {
             var file = fileInput.files[0];
             if (!file) {
